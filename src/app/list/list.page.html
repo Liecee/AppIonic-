@@ -1,16 +1,31 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Liste des jeux vidéo</ion-title>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/home">
+        <ion-icon slot="icon-only" name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="ion-padding">
-    <ion-button routerLink="/create">Ajouter un jeu</ion-button>
+    <ion-button routerLink="/create" expand="block" color="primary">Ajouter un jeu</ion-button>
+    
     <ion-list>
       <ion-item *ngFor="let game of games">
         <ion-label>{{ game.title }}</ion-label>
-        
+        <ion-label>{{ game.platform }}</ion-label>
+        <ion-label>{{ game.description }}</ion-label>
+        <div class="ion-text-end">
+          <ion-button routerLink="/update" expand="block" color="secondary">
+            <ion-icon slot="icon-only" name="create"></ion-icon>
+          </ion-button>
+          <ion-button routerLink="/delete" expand="block" color="danger">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
+        </div>
       </ion-item>
     </ion-list>
   </div>
