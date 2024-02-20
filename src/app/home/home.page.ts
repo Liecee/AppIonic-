@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class HomePage {
 
-  imageUrl: string = 'assets/images/pokemon.jpg';
+  imageUrl: string = 'assets/images/retro.jpg';
 
   constructor(private router: Router) { }
 
