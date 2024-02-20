@@ -7,6 +7,13 @@ const routes: Routes = [
   {
     path: '',
     component: ListPage
+  },
+  {
+    path: ':id/delete',
+    component: ListPage,
+    data: {
+      action: 'delete'
+    }
   }
 ];
 
