@@ -1,17 +1,31 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Page d'accueil</ion-title>
+    <ion-buttons slot="end" class="ion-hide-sm-down"> <!-- Cacher les boutons sur les petits écrans -->
+      <ion-button routerLink="/home" class="nav-button" routerLinkActive="active">Accueil</ion-button>
+      <ion-button (click)="navigateToList()" class="nav-button" routerLinkActive="active">Voir la liste</ion-button>
+      <ion-button routerLink="/about" class="nav-button" routerLinkActive="active">À propos</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end" class="ion-hide-md-up"> <!-- Cacher les boutons sur les grands écrans -->
+      <ion-button routerLink="/home" class="nav-button" routerLinkActive="active">
+        <ion-icon slot="icon-only" name="home"></ion-icon> <!-- Utiliser des icônes pour les boutons sur les petits écrans -->
+      </ion-button>
+      <ion-button (click)="navigateToList()" class="nav-button" routerLinkActive="active">
+        <ion-icon slot="icon-only" name="list"></ion-icon> <!-- Utiliser des icônes pour les boutons sur les petits écrans -->
+      </ion-button>
+      <ion-button routerLink="/about" class="nav-button" routerLinkActive="active">
+        <ion-icon slot="icon-only" name="information-circle"></ion-icon> <!-- Utiliser des icônes pour les boutons sur les petits écrans -->
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <div>
     <img [src]="imageUrl" alt="Image d'accueil">
   </div>
 
-<ion-content>
-  <div class="ion-padding">
-    <h1>Bienvenue sur mon application Ionic Angular avec FireBase</h1>
-    <ion-button (click)="navigateToList()">Voir la liste</ion-button>
+  <div class="welcome-message">
+    <h1>Bienvenue sur mon application Ionic Angular avec Firebase</h1>
   </div>
 </ion-content>
