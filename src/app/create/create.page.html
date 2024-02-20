@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Ajouter un jeu</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+    <form [formGroup]="gameForm" (ngSubmit)="createGame()">
+      <ion-item>
+        <ion-label position="floating">Titre</ion-label>
+        <ion-input type="text" formControlName="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Plateforme</ion-label>
+        <ion-input type="text" formControlName="platform"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Description</ion-label>
+        <ion-textarea formControlName="description"></ion-textarea>
+      </ion-item>
+      <ion-button type="submit" [disabled]="!gameForm.valid">Ajouter</ion-button>
+    </form>
+  </div>
+</ion-content>
