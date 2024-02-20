@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 })
 export class HomePage {
 
+  imageUrl: string = 'assets/images/pokemon.jpg';
+
   constructor(private router: Router) { }
 
   navigateToList() {
