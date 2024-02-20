@@ -10,10 +10,7 @@
     <ion-list>
       <ion-item *ngFor="let game of games">
         <ion-label>{{ game.title }}</ion-label>
-        <div class="item-note" slot="end">
-          <ion-button (click)="navigateToEdit(game.id)">Modifier</ion-button>
-          <ion-button (click)="deleteGame(game.id)">Supprimer</ion-button>
-        </div>
+        
       </ion-item>
     </ion-list>
   </div>

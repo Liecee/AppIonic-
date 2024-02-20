@@ -1,10 +1,11 @@
 
 
 export class Game {
+    id?: string;
     title: string;
     platform: string;
     description: string;
-    id?: string;
+    
 
     constructor() {
       this.title = "";

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../services/data.service';
+import { Game } from '../models/game.model';
 
 @Component({
   selector: 'app-list',
@@ -9,30 +10,14 @@ import { DataService } from '../services/data.service';
   providers: [DataService],
 })
 export class ListPage implements OnInit {
+  games!: Array<Game>;
 
-  games: any[] = []; // Ajoutez cette propriété pour stocker les jeux
-  dataService: any;
-  router: any;
+  constructor(
+    private Game: DataService,
+  ) { }
 
   ngOnInit() {
-    // Ajoutez cette méthode pour récupérer les jeux à partir du service DataService
-    this.dataService.getGames().subscribe((games: any[]) => {
-      this.games = games;
+    this.Game.getAll().subscribe((data: any) => {
+      this.games = data;
     });
-  }
-
-  navigateToCreate() {
-    // Ajoutez cette méthode pour naviguer vers la page de création
-    this.router.navigate(['/create']);
-  }
-
-  navigateToEdit(gameId: string) {
-    // Ajoutez cette méthode pour naviguer vers la page de modification
-    this.router.navigate(['/edit', gameId]);
-  }
-
-  deleteGame(gameId: string) {
-    // Ajoutez cette méthode pour supprimer un jeu
-    this.dataService.deleteGame(gameId);
-  }
-}
+  }}
