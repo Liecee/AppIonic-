@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from '../services/data.service';
-
+import { Game } from '../models/game.model';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-create',
@@ -11,30 +11,34 @@ import { DataService } from '../services/data.service';
   providers: [DataService]
 })
 export class CreatePage implements OnInit {
-
-  gameForm!: FormGroup; // Déclarez la propriété ici
+  public game!: Game;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private dataService: DataService,
-    private router: Router
+    private Game: DataService,
+    private toastCtrl: ToastController,
+    private router : Router
   ) { }
 
   ngOnInit() {
-    this.gameForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      platform: ['', Validators.required],
-      description: ['', Validators.required]
+    this.game = new Game();
+  }
+
+  async presentToast() {
+    const toast = this.toastCtrl.create({
+      message: 'Nouveau Jeu enregistré',
+      duration: 2000
+    });
+    (await toast).present().then(() => {
+      setTimeout(() => {
+        this.router.navigate(['/home']);
+      }, 2000);
     });
   }
 
-  createGame() {
-    if (this.gameForm.valid) {
-      this.dataService.createGame(this.gameForm.value)
-        .then(() => {
-          this.router.navigate(['/list']);
-        });
-    }
+  add() {
+    this.Game.saveNewGame(this.game).subscribe(() => {
+      this.game = new Game();
+      this.presentToast();
+    });
   }
-
 }

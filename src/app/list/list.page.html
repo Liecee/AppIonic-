@@ -6,7 +6,7 @@
 
 <ion-content>
   <div class="ion-padding">
-    <ion-button (click)="navigateToCreate()">Ajouter un jeu</ion-button>
+    <ion-button routerLink="/create">Ajouter un jeu</ion-button>
     <ion-list>
       <ion-item *ngFor="let game of games">
         <ion-label>{{ game.title }}</ion-label>

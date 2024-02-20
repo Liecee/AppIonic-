@@ -14,7 +14,7 @@ export class EditPage implements OnInit {
 
   gameForm: FormGroup = new FormGroup({});
 
-  game: Game = { title: '', platform: '', description: '' }
+  game: Game = { title: '', platform: '', description: '',id: '',}
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,7 +29,7 @@ export class EditPage implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id !== null) {
         this.gameId = id;
-        this.dataService.getGame(this.gameId).subscribe((game: Game | undefined) => {
+        this.dataService.get(this.gameId).subscribe((game: Game | undefined) => {
           if (game !== undefined) {
             this.game = game;
             this.initializeForm();
@@ -52,14 +52,9 @@ export class EditPage implements OnInit {
   }
 
   updateGame() {
+    
     if (this.gameForm.valid) {
-      this.dataService.updateGame(this.gameId, this.gameForm.value)
-        .then(() => {
-          this.router.navigate(['/list']);
-        })
-        .catch(error => {
-          // Gérer les erreurs lors de la mise à jour du jeu
-          console.error("Erreur lors de la mise à jour du jeu :", error);
-        });
+     
+      this.dataService.update(this.game);
     }
   }}

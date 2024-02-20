@@ -16,5 +16,8 @@ export class HomePage {
   navigateToList() {
     this.router.navigate(['/list']);
   }
+  navigateToCreate() {
+    this.router.navigate(['/create']);
+  }
 
 }

@@ -1,33 +1,56 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Game } from '../models/game.model';
+import { Observable, map } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import {Game} from '../models/game.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
+  private dbPath = '/games';
+  GamesRef: AngularFirestoreCollection<Game>;
 
-  constructor(private http: HttpClient) { }
 
-  // Méthode pour créer un nouveau jeu
-  createGame(gameData: any): Promise<void> {
-    // Faites une requête HTTP ou appelez une méthode pour créer un nouveau jeu dans votre base de données ou votre API
-    // Par exemple, une requête HTTP POST vers une API
-    return this.http.post<void>('/api/games', gameData).toPromise();
+  constructor(
+    private db: AngularFirestore
+  ) { 
+    this.GamesRef = db.collection(this.dbPath);
   }
 
-  // Méthode pour mettre à jour les détails d'un jeu
-  updateGame(gameId: string, updatedGameData: any): Promise<void> {
-    // Faites une requête HTTP ou appelez une méthode pour mettre à jour les données du jeu dans votre base de données ou votre API
-    // Par exemple, une requête HTTP PUT vers une API
-    return this.http.put<void>(`/api/games/${gameId}`, updatedGameData).toPromise();
+  getAll() : any {
+    return this.GamesRef.snapshotChanges().pipe(
+      map((changes: any) => {
+        return changes.map((doc:any) => {
+          return ({id: doc.payload.doc.id, ...doc.payload.doc.data()})
+        })
+      })
+    );
   }
 
-  // Méthode pour récupérer les détails d'un jeu par son ID
-  getGame(gameId: string): Observable<Game> {
-    // Faites une requête HTTP ou appelez une méthode pour récupérer les données du jeu depuis votre base de données ou votre API
-    // Par exemple, une requête HTTP GET vers une API
-    return this.http.get<Game>(`/api/games/${gameId}`);
+  saveNewGame(Game: Game) : any {
+    return new Observable(obs => {
+      this.GamesRef.add({...Game}).then(() => {
+        obs.next();
+      });
+    });
+  }
+
+  get(id: any):any {
+    return  new Observable(obs => {
+      this.GamesRef.doc(id).get().subscribe(res => {
+        obs.next({id: res.id, ...res.data()});
+      });
+    });
+  }
+
+  update(Game:Game) {
+    return new Observable(obs => {
+      this.GamesRef.doc(Game.id).update(Game);
+      obs.next();
+    });
+  }
+
+  delete(id: any) {
+    this.db.doc(`Games/${id}`).delete();
   }
 }
