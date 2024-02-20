@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutPage implements OnInit {
 
+  imageUrl: string = 'assets/images/pokemon.jpg';
+
+
   constructor() { }
 
   ngOnInit() {
