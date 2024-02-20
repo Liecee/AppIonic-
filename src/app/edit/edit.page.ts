@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DataService } from '../services/data.service';
+import { Game } from '../models/game.model';
+
 
 @Component({
   selector: 'app-edit',
@@ -7,9 +12,54 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditPage implements OnInit {
 
-  constructor() { }
+  gameForm: FormGroup = new FormGroup({});
+
+  game: Game = { title: '', platform: '', description: '' }
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private dataService: DataService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
+
+  gameId!: string;
 
   ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id !== null) {
+        this.gameId = id;
+        this.dataService.getGame(this.gameId).subscribe((game: Game | undefined) => {
+          if (game !== undefined) {
+            this.game = game;
+            this.initializeForm();
+          } else {
+            // Gérer le cas où le jeu n'est pas trouvé
+            console.log("Jeu non trouvé");
+          }
+        });
+    } else {
+        // Gérer le cas où l'ID est null
+    }
   }
 
-}
+  initializeForm() {
+    this.gameForm = this.formBuilder.group({
+      title: [this.game.title, Validators.required],
+      platform: [this.game.platform, Validators.required],
+      description: [this.game.description, Validators.required]
+    });
+  }
+
+  updateGame() {
+    if (this.gameForm.valid) {
+      this.dataService.updateGame(this.gameId, this.gameForm.value)
+        .then(() => {
+          this.router.navigate(['/list']);
+        })
+        .catch(error => {
+          // Gérer les erreurs lors de la mise à jour du jeu
+          console.error("Erreur lors de la mise à jour du jeu :", error);
+        });
+    }
+  }}
