@@ -19,10 +19,10 @@
         <ion-label>{{ game.platform }}</ion-label>
         <ion-label>{{ game.description }}</ion-label>
         <div class="ion-text-end">
-          <ion-button routerLink="/update" expand="block" color="secondary">
+          <ion-button [routerLink]="['/edit', game.id]" expand="block" color="secondary">
             <ion-icon slot="icon-only" name="create"></ion-icon>
           </ion-button>
-          <ion-button routerLink="/delete/{{ game.id }}" expand="block" color="danger">
+          <ion-button (click)="onDelete(game.id)" expand="block" color="danger">
             <ion-icon slot="icon-only" name="trash"></ion-icon>
           </ion-button>
         </div>

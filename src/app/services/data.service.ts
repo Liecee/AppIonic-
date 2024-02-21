@@ -51,6 +51,6 @@ export class DataService {
   }
 
   delete(id: any) {
-    this.db.doc(`Games/${id}`).delete();
+    this.db.doc(`games/${id}`).delete();
   }
 }

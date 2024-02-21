@@ -11,3 +11,20 @@
     </ion-toolbar>
   </ion-header>
 </ion-content>
+
+<ion-content [fullscreen]="true">
+  <ion-item>
+    <ion-input type="text" label="title" [(ngModel)]="game.title"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input type="text" label="platform" [(ngModel)]="game.platform"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input type="text" label="description" [(ngModel)]="game.description"></ion-input>
+  </ion-item>
+
+  <p class="text-center">
+    <ion-button (click)="onModif()">Edit</ion-button>
+  </p>
+</ion-content>
